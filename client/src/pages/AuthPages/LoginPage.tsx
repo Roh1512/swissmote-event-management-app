@@ -14,8 +14,8 @@ import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const [details, setDetails] = useState<LoginRequest>({
-    username: "user1",
-    password: "password",
+    username: "",
+    password: "",
   });
   const navigate = useNavigate();
 
