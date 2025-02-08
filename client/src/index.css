@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  min-height: 100vh;
+  height: 100%;
+}
+
+#root {
+  @apply min-h-screen w-full m-0 p-0 box-border flex flex-col justify-between;
+}
+
+header {
+  @apply bg-base-300 text-base-content;
+}
+main {
+  @apply flex-1;
+}
+footer {
+  @apply bg-base-300 text-base-content;
+}
+
+h1 {
+  @apply text-5xl font-bold;
+}
+h2 {
+  @apply text-4xl font-bold;
+}
+h3 {
+  @apply text-3xl font-bold;
+}
+h4 {
+  @apply text-2xl font-bold;
+}
+h5 {
+  @apply text-xl font-bold;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+button {
+  @apply btn;
+}
+
+.link-text {
+  @apply link link-info;
+}
+
+.logo-text {
+  display: block;
+  @apply text-2xl font-bold;
+}
+
+.alert-icon-2 {
+  @apply w-5 h-5;
+}
+
+@media only screen and (max-width: 600px) {
+  .logo-text {
+    display: none;
+  }
+  .icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}

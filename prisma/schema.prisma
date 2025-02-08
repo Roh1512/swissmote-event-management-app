@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model collection_0 {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  @@map("collection 0")
+}
+
+model User {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  username           String   @unique
+  email              String   @unique
+  password           String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  profileImgUrl      String?
+  profileImgPublicId String?
+
+  eventsCreated      Event[]  @relation("CreatedEvents")
+  eventsAttendingIds String[] @db.ObjectId
+  eventsAttending    Event[]  @relation("AttendingEvents", fields: [eventsAttendingIds], references: [id])
+}
+
+model Event {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  imageUrl    String?
+  date        DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String   @db.ObjectId
+
+  createdBy   User   @relation("CreatedEvents", fields: [createdById], references: [id])
+  createdById String @db.ObjectId
+
+  attendeeIds String[] @db.ObjectId
+  attendees   User[]   @relation("AttendingEvents", fields: [attendeeIds], references: [id])
+}
+
+model Category {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  title     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Event[]
+}
