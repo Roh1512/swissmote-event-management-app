@@ -18,6 +18,11 @@ import categoryRouter from "./routes/category.route.js";
 import myEventRouter from "./routes/myevents.route.js";
 import profileRouter from "./routes/profile.route.js";
 
+export const origin =
+  process.env.NODE_ENV === "production"
+    ? "https://event-management-app-brdd.onrender.com"
+    : "http://localhost:5173";
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,7 +34,7 @@ app.use(express.static(path.join(__dirname, "client", "dist")));
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Allow all origins, or specify an origin (e.g., "http://localhost:3000")
+    origin: origin, // Allow all origins, or specify an origin (e.g., "http://localhost:3000")
     credentials: true, // Enable cookies and credentials if needed
     methods: ["GET", "POST", "PUT", "DELETE"],
   })

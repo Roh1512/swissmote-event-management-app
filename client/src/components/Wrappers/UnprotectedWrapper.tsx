@@ -9,20 +9,16 @@ import Footer from "../Footer/Footer";
 const UnprotectedWrapper = () => {
   console.log("UNPROTECTED");
 
-  const {
-    isError: isAuthError,
-    isLoading: isAuthLoading,
-    isSuccess: isAuthSuccess,
-  } = useCheckAuthQuery(undefined, {
-    refetchOnFocus: false,
-    refetchOnReconnect: false,
-  });
+  const { isSuccess: isAuthSuccess, isLoading: isAuthLoading } =
+    useCheckAuthQuery();
 
   if (isAuthLoading) {
     return <PageLoading />;
   }
 
-  if (isAuthError) {
+  if (isAuthSuccess) {
+    return <Navigate to="/app" replace />;
+  } else {
     return (
       <ErrorBoundary>
         <Suspense fallback={<PageLoading />}>
@@ -33,12 +29,6 @@ const UnprotectedWrapper = () => {
       </ErrorBoundary>
     );
   }
-
-  if (isAuthSuccess) {
-    return <Navigate to="/app" replace />;
-  }
-
-  return null;
 };
 
 export default UnprotectedWrapper;

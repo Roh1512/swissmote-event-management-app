@@ -8,6 +8,7 @@ import app from "../app.js";
 import debug from "debug";
 import http from "http";
 import { Server as SocketServer } from "socket.io";
+import { origin } from "../app.js";
 
 /**
  * Get port from environment and store in Express.
@@ -32,7 +33,7 @@ const server = http.createServer(app);
 
 const io = new SocketServer(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: origin,
     methods: ["GET", "POST", "PUT"],
     credentials: true,
   },

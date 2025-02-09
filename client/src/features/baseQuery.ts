@@ -53,10 +53,12 @@ export const baseQueryWithReAuth: BaseQueryFn<
         result = await baseQueryWithAuth(args, api, extraOptions);
       } else {
         api.dispatch(clearCredentials());
+        return refreshResult;
       }
     } catch (error) {
       console.log("Error refreshing token: ", error);
       api.dispatch(clearCredentials());
+      return result;
     }
   }
   return result;
