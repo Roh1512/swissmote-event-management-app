@@ -7,6 +7,8 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 const UnprotectedWrapper = () => {
+  console.log("UNPROTECTED");
+
   const {
     isError: isAuthError,
     isLoading: isAuthLoading,

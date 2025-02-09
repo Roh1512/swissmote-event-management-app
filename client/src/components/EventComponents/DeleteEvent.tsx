@@ -1,47 +1,45 @@
-import { useDeleteCategoryMutation } from "@/features/category/categoryApiSlice";
-import type { Category } from "@/types/categoryTypes";
+import { useDeleteEventMutation } from "@/features/events/myEventsApiSlice";
+import { EventData } from "@/types/eventTypes";
 import { getApiErrorMessage } from "@/utils.ts/errorHandlers";
 import { closeModal, openModal } from "@/utils.ts/modalUtils";
 import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
-import ButtonLoading from "../Loading/ButtonLoading";
 import IconLoading from "../Loading/IconLoading";
 import { Trash2 } from "lucide-react";
+import ButtonLoading from "../Loading/ButtonLoading";
 
 type Props = {
-  category: Category;
-  categoryId: string;
+  event: EventData;
+  eventId: string;
 };
 
-const DeleteCategory = ({ category, categoryId }: Props) => {
-  const modalId = `deleteModal=${category.id}`;
-  const [deleteCategory, { data, isLoading, isSuccess, isError, error }] =
-    useDeleteCategoryMutation();
-  const isDeleteLoading = isLoading && categoryId === category.id;
+const DeleteEvent = ({ event, eventId }: Props) => {
+  const modalId = `deleteEventModal=${event.id}`;
+  const [deleteEvent, { data, isLoading, isSuccess, isError, error }] =
+    useDeleteEventMutation();
+  const isDeleteLoading = isLoading && eventId === event.id;
 
-  const handleDeleteCategory = useCallback(async () => {
+  const handleDeleteEvent = useCallback(async () => {
     try {
-      const res = await deleteCategory({ categoryId: category.id }).unwrap();
+      const res = await deleteEvent({ eventId: event.id }).unwrap();
       console.log(res);
       closeModal(modalId);
     } catch (error) {
       console.error(error);
     }
-  }, [category.id, deleteCategory, modalId]);
+  }, [deleteEvent, event.id, modalId]);
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success(data?.message || "Category Deleted");
+      toast.success(data?.message || "Event deleted");
     }
     if (isError && error) {
       const errorMessage = getApiErrorMessage(error);
-      toast.error(errorMessage || "Error deleting category");
+      toast.error(errorMessage || "Error deleting event");
     }
   }, [data?.message, error, isError, isSuccess]);
-
   return (
     <>
-      {/* Delete Button */}
       <button
         className="btn btn-sm btn-ghost text-red-700 hover:bg-error/10"
         aria-label="Delete"
@@ -50,10 +48,8 @@ const DeleteCategory = ({ category, categoryId }: Props) => {
         {isDeleteLoading ? <IconLoading /> : <Trash2 />}
       </button>
 
-      {/* Modal */}
       <dialog id={modalId} className="modal">
         <div className="modal-box">
-          {/* Close Button */}
           <button
             type="button"
             className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -62,10 +58,9 @@ const DeleteCategory = ({ category, categoryId }: Props) => {
             ✕
           </button>
 
-          {/* Modal Content */}
           <div>
             <h2 className="text-xl font-bold mb-4">
-              Delete Category: {category.title}
+              Delete Event: {event.title}
             </h2>
             <p className="text-gray-600">
               Are you sure you want to delete this brand? This action cannot be
@@ -74,7 +69,7 @@ const DeleteCategory = ({ category, categoryId }: Props) => {
 
             {/* Action Buttons */}
             <div className="modal-action">
-              <button className="btn btn-error" onClick={handleDeleteCategory}>
+              <button className="btn btn-error" onClick={handleDeleteEvent}>
                 {isDeleteLoading ? <ButtonLoading text="Deleting" /> : "Delete"}
               </button>
               <button
@@ -91,4 +86,4 @@ const DeleteCategory = ({ category, categoryId }: Props) => {
   );
 };
 
-export default DeleteCategory;
+export default DeleteEvent;

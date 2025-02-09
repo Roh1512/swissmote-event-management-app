@@ -139,9 +139,10 @@ export const refreshAccessToken = async (req, res, next) => {
   try {
     const user = req.user;
     if (!user) {
-      return next(errorMessage(403, "Unauthorized"));
+      console.log("NO User FOund, controller");
+
+      return next(errorMessage(403, "Unauthorized no user"));
     }
-    console.log("USer: ", user);
 
     const accessToken = createAccessToken(user.id);
     const refreshToken = createRefreshToken(user.id);

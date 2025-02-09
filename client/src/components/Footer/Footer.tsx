@@ -1,12 +1,10 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import Logo from "../Logo/Logo";
 
 const Footer = memo(() => {
   return (
     <footer className="w-full">
-      <Link to="/" className="btn btn-neutral">
-        Home
-      </Link>
+      <Logo />
       <p>&copy; 2025 All rights reserved.</p>
     </footer>
   );

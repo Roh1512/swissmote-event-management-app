@@ -41,7 +41,7 @@ export const authenticateUser = async (req, res, next) => {
     }
     if (decodedAccessToken.data !== decodedRefreshToken.data) {
       clearRefreshCookie(res);
-      next(errorMessage(401, "Unauthorized"));
+      return next(errorMessage(401, "Unauthorized"));
     }
     const user = await prisma.user.findUnique({
       where: {
@@ -58,14 +58,18 @@ export const authenticateUser = async (req, res, next) => {
     next();
   } catch (error) {
     isDevEnv && console.error("Error authentication user: ", error);
-    next(errorMessage(401, "Authentication error"));
+    return next(errorMessage(401, "Authentication error"));
   }
 };
 
 export const verifyWithRefreshCookie = async (req, res, next) => {
   const refreshToken = req.cookies?.refreshCookie;
 
-  if (!refreshToken) return next(errorMessage(403, "Unauthorized"));
+  if (!refreshToken) {
+    console.log("NO REFRESH TOKEN", refreshToken);
+
+    return next(errorMessage(403, "Unauthorized"));
+  }
   try {
     let decodedRefreshToken;
     if (refreshToken) {
@@ -77,6 +81,8 @@ export const verifyWithRefreshCookie = async (req, res, next) => {
       } catch (err) {
         isDevEnv && console.log("Invalid Refresh token: ", err);
         clearRefreshCookie(res);
+        console.log("INVALID REFRESH TOKEN");
+
         return next(errorMessage(403, "Unauthorized"));
       }
     }
@@ -90,6 +96,8 @@ export const verifyWithRefreshCookie = async (req, res, next) => {
     });
     if (!user) {
       clearRefreshCookie(res);
+      console.log("USER NOT FOUND");
+
       return next(errorMessage(404, "User not found"));
     }
     req.user = user;
@@ -97,6 +105,6 @@ export const verifyWithRefreshCookie = async (req, res, next) => {
   } catch (error) {
     clearRefreshCookie(res);
     isDevEnv && console.error("Error refreshing token: ", error);
-    next(errorMessage(401, "Unauthorized"));
+    return next(errorMessage(401, "Unauthorized"));
   }
 };

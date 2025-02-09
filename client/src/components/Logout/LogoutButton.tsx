@@ -1,6 +1,7 @@
 import { useLogoutMutation } from "@/features/auth/authApiSlice";
 import ButtonLoading from "../Loading/ButtonLoading";
 import { toast } from "react-toastify";
+import { LogOutIcon } from "lucide-react";
 
 const LogoutButton = () => {
   const [logout, { isLoading }] = useLogoutMutation();
@@ -13,8 +14,15 @@ const LogoutButton = () => {
     }
   };
   return (
-    <button className="btn btn-warning" onClick={handleLogout}>
-      {isLoading ? <ButtonLoading text="Waiing" /> : "Logout"}
+    <button className="btn btn-" onClick={handleLogout}>
+      {isLoading ? (
+        <ButtonLoading text="Waiing" />
+      ) : (
+        <>
+          <LogOutIcon />
+          <span>Logout</span>
+        </>
+      )}
     </button>
   );
 };

@@ -85,15 +85,16 @@ export const getCategories = async (req, res, next) => {
     // Fetch paginated categories
     const categories = await prisma.category.findMany({
       where: {
-        title: { contains: search, mode: "insensitive" },
+        title: { startsWith: search, mode: "insensitive" },
       },
       skip: (pageNumber - 1) * limit, // Calculate offset
       take: limit, // Limit results per page
       orderBy: { createdAt: "desc" }, // Sort by newest
     });
 
-    res.status(200).json(categories);
+    return res.status(200).json(categories);
   } catch (error) {
     console.error("Error fetching categories: ", error);
+    return next(errorMessage(500, "Error fetching categories"));
   }
 };

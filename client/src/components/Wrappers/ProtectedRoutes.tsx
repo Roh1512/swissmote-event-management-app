@@ -7,6 +7,8 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 
 const ProtectedRoutes = () => {
+  console.log("PROTECTED");
+
   const location = useLocation();
   const { isError: isAuthError, isLoading: isAuthLoading } = useCheckAuthQuery(
     undefined,
