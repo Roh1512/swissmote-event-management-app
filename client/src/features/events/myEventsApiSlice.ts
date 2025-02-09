@@ -26,7 +26,7 @@ export const myEventsApiSlice = createApi({
         },
       }),
       async onCacheEntryAdded(
-        arg,
+        _arg,
         { updateCachedData, cacheDataLoaded, cacheEntryRemoved }
       ) {
         // Create your Socket.IO connection. Adjust the URL/path as needed.
