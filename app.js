@@ -7,10 +7,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
-import { io } from "./bin/www";
 
-import indexRouter from "./routes/index.js";
-import usersRouter from "./routes/users.js";
 import uploadRouter from "./routes/uploadImage.js";
 import authRouter from "./routes/auth.route.js";
 import eventsRouter from "./routes/events.route.js";
@@ -40,10 +37,6 @@ app.use(
   })
 );
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -55,9 +48,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api", indexRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
 app.use("/api/upload", uploadRouter);
 app.use("/api/event", eventsRouter);
 app.use("/api/myevent", myEventRouter);
