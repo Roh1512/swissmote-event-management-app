@@ -16,6 +16,7 @@ import ButtonLoading from "@/components/Loading/ButtonLoading";
 import { PenLine, Plus } from "lucide-react";
 import AlertText from "@/components/ErrorComponents/AlertText";
 import CategorySelect from "@/components/CategoryComponents/CategorySelect";
+import { toast } from "react-toastify";
 
 const AddEventComponent: React.FC = () => {
   const modalId = "add-event-modal";
@@ -68,6 +69,7 @@ const AddEventComponent: React.FC = () => {
       const result = await addEvent(formData).unwrap();
       console.log("Event created:", result);
       // Optionally clear form fields or show success message...
+      toast.success("Event added");
     } catch (err) {
       console.error("Error adding event:", err);
     }
