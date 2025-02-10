@@ -3,13 +3,7 @@ import { Link } from "react-router-dom";
 const HomePage = () => {
   return (
     <main className="min-h-screen bg-base-200">
-      <section
-        className="hero min-h-screen"
-        style={{
-          backgroundImage:
-            "url(https://source.unsplash.com/1600x900/?event,concert)",
-        }}
-      >
+      <section className="hero min-h-screen bg-gradient-to-r from-blue-500 to-green-500 md:bg-gradient-to-b md:from-red-500 md:to-yellow-500">
         {/* Overlay for better text contrast */}
         <div className="hero-overlay bg-opacity-60 bg-black"></div>
         <div className="hero-content text-center text-neutral-content">
