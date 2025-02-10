@@ -8,7 +8,6 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 
-import uploadRouter from "./routes/uploadImage.js";
 import authRouter from "./routes/auth.route.js";
 import eventsRouter from "./routes/events.route.js";
 import categoryRouter from "./routes/category.route.js";
@@ -49,7 +48,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/auth", authRouter);
-app.use("/api/upload", uploadRouter);
 app.use("/api/event", eventsRouter);
 app.use("/api/myevent", myEventRouter);
 app.use("/api/category", categoryRouter);
